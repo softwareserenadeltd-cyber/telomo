@@ -201,7 +201,7 @@ function CaptchaPage() {
   useEffect(() => {
     const captchaPassed = localStorage.getItem('captchaPassed');
     if (captchaPassed === 'true') {
-      navigate('/Appotp', { replace: true });
+      navigate('/landing', { replace: true });
     }
   }, [navigate]);
 
@@ -398,7 +398,7 @@ function CaptchaPage() {
         if (data.success) {
           localStorage.setItem("captchaPassed", "true");
           // استخدام replace لمسح صفحة Captcha من التاريخ
-          navigate('/Appotp', { replace: true });
+          navigate('/landing', { replace: true });
         } else {
           window.grecaptcha && window.grecaptcha.reset();
           setCaptchaValue(null);
